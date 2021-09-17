@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+  Your Name: <input type="text" id='name'>
+  <input type="button" value="login" onclick="start();">
+  <br>
+  <br>
+  <br>
+  <!-- To use the IDE without logging in, please visit
+  <input type="button" value="CircuitPython Online IDE" onclick="window.location.replace('https://urfdvw.github.io/CircuitPython-online-IDE/')"> -->
+  <script>
+    function start(){
+      name = document.getElementById('name').value;
+      window.location.replace(window.location.href + 'sender.html' + '?id=private-' + name)
+    }
+  </script>
+</body>
+
+</html>

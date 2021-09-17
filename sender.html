@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <head>
+        <style>
+            body {
+                color: rgb(248, 248, 242);
+                background-color: rgb(39, 40, 34);
+            }
+
+            .row {
+                display: flex;
+            }
+
+            .column {
+                flex: 50%;
+            }
+
+            .head {
+                height: 50px;
+            }
+
+            .toolbar {
+                height: 20px;
+            }
+
+            .content {
+                height: calc(100vh - 20px - 50px - 40px - 20px);
+                overflow-y: scroll;
+                border: 1px solid grey;
+            }
+
+            .tail {
+                height: 20px;
+            }
+        </style>
+    </head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
+    </link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css">
+    </link>
+    <link rel="stylesheet" href="https://codemirror.net/addon/hint/show-hint.css">
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js"></script>
+    <script type="text/javascript" src="js/python.js"></script>
+    <script type="text/javascript" src="https://codemirror.net/addon/comment/comment.js"></script>
+    <script type="text/javascript" src="https://codemirror.net/addon/hint/show-hint.js"></script>
+    <script src="https://codemirror.net/addon/hint/anyword-hint.js" id=anyword></script>
+
+</head>
+
+<body>
+    <div class="head">
+        <h1>CircuitPython Online IDE
+            <button id="connect" onClick='clickConnect()'> Connect </button>
+            <button
+                onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSdupiJIRViFwPpuQC1hMp8gRvhxACLoAjgepm_-IRZumwK7Cg/viewform?usp=sf_link')"
+                style="float: right;">
+                Feedback
+            </button>
+        </h1>
+    </div>
+
+    <div class="row">
+        <div class="column toolbar">
+            Editor
+            <button id="inputfile"> Open </button>
+            <button id="save" onClick='save_and_run(editor)'> Save and Run </button>
+            <button onclick="save_code()">Save as</button>
+            <text id="filename"></text>
+        </div>
+        <div class="column toolbar">
+            Serial
+            <button onClick="serial.setValue('')"> Clear </button>
+            <button onclick="savelog()">Save log</button>
+            <button onclick="sendCTRLC()">CTRL-C</button>
+            <button onclick="sendCTRLD()">CTRL-D</button>
+            <button onclick="window.open('https://github.com/urfdvw/CircuitPython-online-IDE#workflow-aka-how-to-use')"
+                style="float: right;">
+                IDE Help
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column content">
+            <div id="my-div">
+            </div>
+        </div>
+        <div class="column content">
+            <div id='out_frame'>
+                <div id="serial_R">
+                </div>
+                <div id="serial_T">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tail">
+        Ref:
+        <button onclick="window.open('https://circuitpython.readthedocs.io/en/latest/docs/index.html')">
+            CircuitPython API
+        </button>
+        <button onclick="window.open('https://circuitpython.readthedocs.io/projects/bundle/en/latest/')">
+            Sponsored Libraries and Drivers
+        </button>
+        <button onclick="window.open('https://circuitpython.readthedocs.io/en/latest/docs/library/index.html')">
+            MicroPython libraries
+        </button>
+        <button onclick="window.open('https://circuitpython.org/')">
+            CircuitPython Homepage
+        </button>
+        <button id="send_setting" onclick="change_send_key();" style="float: right;">
+            [Enter] to send
+        </button>
+    </div>
+    <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+    <script type="text/javascript" src="js/sender.js">
+    </script>
+</body>
+
+</html>

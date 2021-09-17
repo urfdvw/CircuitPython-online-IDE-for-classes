@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <head>
+        <style>
+            body {
+                color: rgb(248, 248, 242);
+                background-color: rgb(39, 40, 34);
+            }
+
+            .row {
+                display: flex;
+            }
+
+            .column {
+                flex: 50%;
+            }
+
+            .head {
+                height: 70px;
+            }
+
+            .content {
+                height: calc(100vh - 20px - 50px - 40px - 20px);
+                overflow-y: scroll;
+                border: 1px solid grey;
+            }
+
+            .tail {
+                height: 20px;
+            }
+        </style>
+    </head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
+    </link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css">
+    </link>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js"></script>
+    <script type="text/javascript" src="js/python.js"></script>
+    <script type="text/javascript" src="https://codemirror.net/addon/selection/active-line.js"></script>
+
+</head>
+
+<body>
+    <div class="head">
+        student list:
+    </div>
+
+    <div class="row">
+        <div class="column content">
+            <div id="my-div">
+            </div>
+        </div>
+        <div class="column content">
+            <div id='out_frame'>
+                <div id="serial_R">
+                </div>
+                <div id="serial_T">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tail">
+        <input type="button" value="Add students" onclick="add_buttons_batch();">
+        <input type="button" value="Refresh students" onclick="refresh_buttons();">
+
+        <div style="float: right;">
+            <input type="checkbox" onchange="change_auto_refreshing(this);">
+            Auto refreshing
+            </input>
+            <input type="button" value="Refresh" onclick="onetime_receiving();">
+        </div>
+    </div>
+    <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
+    <script type="text/javascript" src="js/receiver.js">
+    </script>
+</body>
+
+</html>
