@@ -16,6 +16,21 @@ With these additional functions, teachers can provide timely feedback to the stu
 - Pusher for real-time communication
 - Goole app engine for hosting the service
 
+# How to use
+
+## `index.html` is the sign-in page for students.
+
+Students can sign in and use the IDE.
+
+## `receiver.html` is the teacher's monitor page.
+
+Teachers should First `Add students` by the left bottom corner,
+and check students' code by click on their name on the top.
+If `Auto refreshing` on the right bottom corner is selected,
+the code will be updated in real-time.
+If not selected, 
+the teacher can click on the `Refresh` button or the student's name to refresh.
+
 # How to install
 You first need to download the repository to local.
 
@@ -38,16 +53,3 @@ module.exports = { apikey };
 and then `npm start` to start the project locally.
 
 How to deploy the service onto the google app engine is beyond the scope of this document.
-
-# How to use
-
-- `index.html` is the sign-in page for students.
-- `receiver.html` is the teacher's monitor page.
-
-Students can sign in and use the IDE.
-Teachers should First `Add students` by the left bottom corner,
-and check students' code by click on their name on the top.
-If `Auto refreshing` on the right bottom corner is selected,
-the code will be updated in real-time.
-If not selected, 
-the teacher can click on the `Refresh` button or the student's name to refresh.
