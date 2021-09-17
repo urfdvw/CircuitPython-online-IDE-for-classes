@@ -1,4 +1,4 @@
-# CircuitPython online IDE for class
+# CircuitPython online IDE for classes
 
 This project provides (almost) the same online ide as the [Cpy online IDE](https://github.com/urfdvw/CircuitPython-online-IDE).
 However, in this project, teaching functions are provided:
