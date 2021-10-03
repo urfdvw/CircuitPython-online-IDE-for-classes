@@ -4,10 +4,6 @@
 
 document.title = 'CPy IDE'
 
-function show_alert() {
-    alert("Browser not supported!\n\nPlease use the latest version of Chrome browser, Chrome OS, or Chromium based browsers such as MS Edge.\nPlease use the desktop version of the browsers, not the android or ios version.")
-}
-
 /**
  * Serial driver *******************************************************
  */
@@ -76,19 +72,17 @@ async function clickConnect() {
     }
 
     // CODELAB: Add connect code here.
-    try {
-        await connect();
-    } catch {
-        show_alert();
-    }
+    await connect();
 }
 
+var serial_value_text = "";
 async function readLoop() {
     // Reads data from the input stream and displays it in the console.
     while (true) {
         const { value, done } = await reader.read();
         if (value) {
-            serial.setValue(serial.getValue() + value);
+            serial_value_text += value;
+            serial.setValue(serial_value_text);
             get_dir_returns();
             // removed the carriage return, for some reason CircuitPython does not need it
             //log.innerHTML += value + '\n';
@@ -99,7 +93,6 @@ async function readLoop() {
             break;
         }
     }
-
 }
 
 // auto scroll 
@@ -191,16 +184,12 @@ function send_single_line(line) {
 let fileHandle;
 var butOpenFile = document.getElementById("inputfile")
 butOpenFile.addEventListener('click', async () => {
-    try {
-        [fileHandle] = await window.showOpenFilePicker();
-        const file = await fileHandle.getFile();
-        const contents = await file.text();
-        editor.setValue(contents);
-        document.getElementById('filename').innerHTML = fileHandle.name;
-        document.title = fileHandle.name
-    } catch {
-        show_alert()
-    }
+    [fileHandle] = await window.showOpenFilePicker();
+    const file = await fileHandle.getFile();
+    const contents = await file.text();
+    editor.setValue(contents);
+    document.getElementById('filename').innerHTML = fileHandle.name;
+    document.title = fileHandle.name
 });
 
 async function writeFile(fileHandle, contents) {
