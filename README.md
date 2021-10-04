@@ -11,6 +11,7 @@ With these additional functions, teachers can provide timely feedback to the stu
 # Techniques used
 - Node.js on the server-side
 - Vanilla JavaScript on the client-side
+    - Code Mirror 5
     - Chrome file API
     - Chrome Serial API
 - Pusher for real-time communication
