@@ -19,7 +19,8 @@
             }
 
             .content {
-                height: calc((100vh - 50px - 20px - 25px - 40px) / 2 - 25px);
+                /* (100% - head - tail)/2 - toolbar -20 */
+                height: calc((100vh - 50px - 20px) / 2 - 25px - 20px);
                 overflow-y: scroll;
                 border: 1px solid grey;
             }
@@ -75,11 +76,10 @@
     </div>
     <div class="content">
         <div id='out_frame'>
-            <div id="serial_R">
-            </div>
+            <div id="serial_R"></div>
+            <div id="serial_T"></div>
         </div>
     </div>
-    <div id="serial_T"> </div>
 
     <div class="tail">
         Ref:

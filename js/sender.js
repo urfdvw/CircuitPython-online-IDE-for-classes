@@ -520,7 +520,8 @@ channel.bind('client-request-content', function () {
     channel.trigger('client-text-edit', {
         editor: editor.getValue(),
         cursor: editor.getCursor(),
-        serial: serial.getValue(),
+        serial: serial.getValue().slice(end=-(9000 - editor.getValue().length)),
+        // 10000 byte is the limit of a message
         command: command.getValue(),
     });
 });
