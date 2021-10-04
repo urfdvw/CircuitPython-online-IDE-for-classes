@@ -45,9 +45,17 @@ var command = CodeMirror(document.querySelector('#serial_T'), {
 command.setSize(width = '100%', height = '100%')
 
 /**
- * Pusher related
+ * UI
  */
 
+// auto scroll 
+new ResizeObserver(function () {
+    out_frame.parentNode.scrollTop = out_frame.parentNode.scrollHeight;
+}).observe(out_frame)
+
+/**
+ * Pusher related
+ */
 
 Pusher.logToConsole = true;
 
