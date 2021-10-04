@@ -3,10 +3,10 @@
 This project provides (almost) the same online ide as the [Cpy online IDE](https://github.com/urfdvw/CircuitPython-online-IDE).
 However, in this project, teaching functions are provided:
 - students sign in the IDE by a unique 'nick name'
-- teachers can monitor the students' editor code and console outputs according to their 'nick name'
-- teachers can monitor multiple students
+- Instructors can monitor the students' editor code and console outputs according to their 'nick names'
+- Instructors can monitor multiple students
 
-With these additional functions, teachers can provide timely feedback to the students.
+With these additional functions, instructors can provide timely feedback to the students.
 
 # Techniques used
 - Node.js on the server-side
@@ -23,23 +23,28 @@ With these additional functions, teachers can provide timely feedback to the stu
 
 Students can sign in and use the IDE.
 
-## `receiver.html` is the teacher's monitor page.
+## `receiver.html` is the instructor's monitor page.
 
-Teachers should First `Add students` by the left bottom corner,
+Instructors should First `Add students` by the left bottom corner,
 and check students' code by click on their name on the top.
 If `Auto refreshing` on the right bottom corner is selected,
 the code will be updated in real-time.
 If not selected, 
-the teacher can click on the `Refresh` button or the student's name to refresh.
+the instructor can click on the `Refresh` button or the student's name to refresh.
 
 # How to install
-You first need to download the repository to local.
+This section explains the steps for testing the platform locally for evaluation and development reasons. 
+You need to have `Node.js` installed to follow the instructions below.
+About how to deploy the service onto the google app engine for actual usages,
+please see [Google documents](https://cloud.google.com/appengine/docs/standard/nodejs/quickstart).
 
-Create a Pusher account, 
-which is free for small-scale usage. 
-Create a `channel` in your Pusher account. 
-Then create a `key.js` file in the local directory containing the keys:
+1. Download the repository to local and unzip it.
+2. Create a Pusher.com account.
+3. Create a `channel` in your Pusher account. 
+    - which is free for small-scale usage.
+4. Then create a `key.js` file in the local project directory (besides `index.html`) containing the keys:
 ```javascript
+// key.js
 var apikey= {
     appId: "YOUR INFO",
     key: "YOUR INFO",
@@ -49,8 +54,8 @@ var apikey= {
 }
 module.exports = { apikey };
 ```
+5. `npm install` to install all required modules, 
+6. and then `npm start` to start the project locally.
+7. visit `http://localhost:5000/` in the browser to log in as a student.
+8. visit `http://localhost:5000/receiver.html` in the browser to open instructor tools.
 
-`npm install` to install all required modules, 
-and then `npm start` to start the project locally.
-
-How to deploy the service onto the google app engine is beyond the scope of this document.
