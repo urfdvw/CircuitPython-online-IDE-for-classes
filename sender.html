@@ -21,7 +21,6 @@
             .content {
                 /* (100% - head - tail)/2 - toolbar -20 */
                 height: calc((100vh - 50px - 20px) / 2 - 25px - 20px);
-                overflow-y: scroll;
                 border: 1px solid grey;
             }
 
@@ -64,7 +63,7 @@
         <text id="filename"></text>
     </div>
     <div class="content">
-        <div id="my-div">
+        <div id="my_div">
         </div>
     </div>
     <div class="toolbar">
@@ -74,7 +73,7 @@
         <button onclick="sendCTRLC()">CTRL-C</button>
         <button onclick="sendCTRLD()">CTRL-D</button>
     </div>
-    <div class="content">
+    <div class="content" style ='overflow-y: scroll'>
         <div id='out_frame'>
             <div id="serial_R"></div>
             <div id="serial_T"></div>
