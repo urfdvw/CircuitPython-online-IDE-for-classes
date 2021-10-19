@@ -187,7 +187,7 @@ butOpenFile.addEventListener('click', async () => {
     const file = await fileHandle.getFile();
     const contents = await file.text();
     editor.setValue(contents);
-    document.getElementById('filename').innerHTML = fileHandle.name;
+    document.getElementById('filename').innerHTML = ': ' + fileHandle.name;
     document.title = fileHandle.name
 });
 
@@ -200,8 +200,21 @@ async function writeFile(fileHandle, contents) {
     await writable.close();
 }
 
-function save_and_run(cm) {
-    writeFile(fileHandle, cm.getValue());
+async function save_and_run(cm) {
+    var serial_out_len = serial_value_text.length;
+    await writeFile(fileHandle, cm.getValue());
+    console.log('file saved');
+    setTimeout(function () {
+        // wait for 1s, if nothing changed in the serial out, 
+        // then send command to force run the saved script
+        if (serial_out_len == serial_value_text.length) {
+            console.log('save did not trigger run, manually run instead');
+            sendCTRLC();
+            setTimeout(function () {
+                sendCTRLD();
+            }, 50);
+        }
+    }, 1000);
 }
 
 function download(data, filename, type) {
@@ -307,12 +320,12 @@ var serial = CodeMirror(document.querySelector('#serial_R'), {
 });
 serial.setSize(width = '100%', height = '100%')
 
-var serial_disp_text = serial_value_text.slice(end=-10000);
+var serial_disp_text = serial_value_text.slice(end = -10000);
 function serial_disp_loop() {
     var rand = Math.round(Math.random() * 10) + 90;
     receiving_timer = setTimeout(function () {
-        var serial_disp_text_now = serial_value_text.slice(end=-10000);
-        if (serial_disp_text_now != serial_disp_text){
+        var serial_disp_text_now = serial_value_text.slice(end = -10000);
+        if (serial_disp_text_now != serial_disp_text) {
             serial_disp_text = serial_disp_text_now;
             serial.setValue(serial_disp_text);
         }
@@ -530,7 +543,7 @@ channel.bind('client-request-content', function () {
     channel.trigger('client-text-edit', {
         editor: editor.getValue(),
         cursor: editor.getCursor(),
-        serial: serial.getValue().slice(end=-(9000 - editor.getValue().length)),
+        serial: serial.getValue().slice(end = -(9000 - editor.getValue().length)),
         // 10000 byte is the limit of a message
         command: command.getValue(),
     });
