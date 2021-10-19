@@ -214,7 +214,7 @@ async function save_and_run(cm) {
                 sendCTRLD();
             }, 50);
         }
-    }, 1000);
+    }, 1500);
 }
 
 function download(data, filename, type) {
