@@ -48,10 +48,6 @@
     <div class="head">
         <h2>CircuitPython Online IDE
             <button id="connect" onClick='clickConnect()'> Connect </button>
-            <button onclick="window.open('https://github.com/urfdvw/CircuitPython-online-IDE#workflow-aka-how-to-use')"
-                style="float: right;">
-                IDE Help
-            </button>
         </h2>
     </div>
 
@@ -76,7 +72,11 @@
     <div class="content" style ='overflow-y: scroll'>
         <div id='out_frame'>
             <div id="serial_R"></div>
-            <div id="serial_T"></div>
+            <div id="serial_T" style="border: 1px solid grey; position:relative">
+                <button onclick="run_command(command);" style="position: absolute; bottom: 0; right: 0; z-index: 10">
+                    Send
+                </button>
+            </div>
         </div>
     </div>
 
@@ -85,11 +85,12 @@
         <button onclick="window.open('https://circuitpython.org/')">
             CircuitPython Homepage
         </button>
-        <button>
-            Academy Reference
+        <button onclick="window.open('https://github.com/urfdvw/CircuitPython-online-IDE#workflow-aka-how-to-use')">
+            IDE Help
         </button>
-        <button onclick="run_command(command);" style="float: right;">
-            Send
+        <button
+            onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSdupiJIRViFwPpuQC1hMp8gRvhxACLoAjgepm_-IRZumwK7Cg/viewform?usp=sf_link')">
+            Feedback
         </button>
         <button id="send_setting" onclick="change_send_key();" style="float: right;">
             [Enter] to send
