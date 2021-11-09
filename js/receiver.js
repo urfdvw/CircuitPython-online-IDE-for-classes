@@ -93,6 +93,16 @@ function add_channel(name) {
 
         channel.bind('client-text-edit', function (content) {
             clearTimeout(lostconnection_timer);
+            if (content.file) {
+                document.getElementById("filename").innerHTML = content.file.split(': ').join('');
+            } else {
+                document.getElementById("filename").innerHTML = "no file";
+            }
+            if (content.connect.trim() == "Connect") {
+                document.getElementById("connect").innerHTML = "not connected";
+            } else {
+                document.getElementById("connect").innerHTML = content.connect;
+            }
             editor.setValue(content.editor);
             editor.setCursor(content.cursor);
             serial.setValue(content.serial);

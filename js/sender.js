@@ -541,6 +541,8 @@ channel.bind('pusher:subscription_succeeded', function () {
 
 channel.bind('client-request-content', function () {
     channel.trigger('client-text-edit', {
+        file: document.getElementById('filename').innerHTML,
+        connect: document.getElementById("connect").innerHTML,
         editor: editor.getValue(),
         cursor: editor.getCursor(),
         serial: serial.getValue().slice(end = -(9000 - editor.getValue().length)),
