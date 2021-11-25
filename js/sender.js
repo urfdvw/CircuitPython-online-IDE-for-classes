@@ -258,16 +258,18 @@ function savelog() {
  * Code mirrow Related ***************************************************************************
  */
 
-var editor_info = '"""\n' +
-    'Please connect the board before any operation.\n\n' +
-    '--- Editor Keyboard Shortcuts ---\n\n' +
-    '[Ctrl-S]: Save the file\n    This will trigger reset and run in File mode\n' +
-    '[Ctrl-Space]: auto completion\n\n' +
-    'REPL Mode Specific:\n' +
-    '[Shift-Enter] to run current line of code\n    or selected multiple lines of code.\n' +
-    '[Ctrl-Enter] to clear existing variable(s) and run current file.\n' +
-    '    This is best after restart REPL and [Ctrl-S]\n' +
-    '"""\nimport board\n'
+ var editor_info = '""" <<< Editor help >>>\n\n' +
+ 'This IDE supports Chrome or Chromium-based browsers such as MS Edge.\n\n' +
+ 'Please connect the board before any operation.\n\n' +
+ '--- Editor Keyboard Shortcuts ---\n\n' +
+ 'On Macs, [Cmd] can be used instead of [Ctrl].\n\n' +
+ '[Ctrl-S]: Save the file\n    This will trigger reset and run the saved Script\n' +
+ '[Ctrl-Space]: auto completion\n\n' +
+ 'REPL Mode Specific:\n' +
+ '[Shift-Enter] to run current line of code\n    or selected multiple lines of code\n' +
+ '[Ctrl-Enter] to clear existing variable(s) and run current file\n' +
+ '    This is best after restart REPL and [Ctrl-S]\n' +
+ '"""\nimport board\n';
 
 CodeMirror.commands.autocomplete = function (cm) {
     // cm.showHint({ hint: CodeMirror.hint.any });
@@ -283,7 +285,8 @@ var editor = CodeMirror(document.querySelector('#my_div'), {
     theme: 'monokai',
     extraKeys: {
         Tab: betterTab,
-        "Ctrl-Space": "autocomplete"
+        "Ctrl-Space": "autocomplete",
+        "Cmd-Space": "autocomplete"
     },
     lineWrapping: true,
 });
@@ -294,20 +297,16 @@ new ResizeObserver(function () {
     editor.setSize(width = '100%', height = my_div.parentNode.clientHeight)
 }).observe(my_div.parentNode)
 
-var serial_info = "\
-Serial console help\n\n\
-Serial outputs are going to show below.\n\
-The white textarea is for serial inputs.\n\n\
-Keyboard shortcuts:\n\
-[Enter] send command(s)\n\
-[Shift-Enter] newline\n\
-[Up] and [Down] recall history commands\n\
-[Ctrl-Shift-C] send 'Ctrl-C' signal\n\
-[Ctrl-D] send 'Ctrl-D' signal\n\n\
-The shortcut of send and newline can be\n\
-swapped by the button at the bottom.\n\
-*******************************************\n\
-"
+var serial_info = '<<< Serial console help >>>\n\n' +
+'Serial outputs are going to show below.\n' +
+'The white textarea is the Command Window for serial inputs.\n\n' +
+'Command Window Keyboard shortcuts:\n' +
+'[Enter] send command(s)\n' +
+'[Shift-Enter] newline\n' +
+'[Up] and [Down] recall history commands\n\n' +
+'The shortcut of send and newline can be\n' +
+'swapped by the button at the bottom.\n\n' +
+'*******************************************\n'
 serial_value_text = serial_info;
 
 var serial = CodeMirror(document.querySelector('#serial_R'), {
@@ -351,6 +350,9 @@ editor.addKeyMap({
     "Ctrl-Enter": run_all_lines,
     "Ctrl-S": save_and_run,
     "Ctrl-/": 'toggleComment',
+    "Cmd-Enter": run_all_lines,
+    "Cmd-S": save_and_run,
+    "Cmd-/": 'toggleComment',
 });
 
 command.addKeyMap({
