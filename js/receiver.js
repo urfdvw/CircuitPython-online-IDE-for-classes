@@ -36,7 +36,7 @@ serial.setSize(width = '100%', height = '100%')
 
 var command_info = "Students command will show up here"
 var command = CodeMirror(document.querySelector('#serial_T'), {
-    lineNumbers: false,
+    lineNumbers: true,
     value: command_info,
     mode: 'python',
     readOnly: true,
