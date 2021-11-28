@@ -204,7 +204,7 @@ function refresh_buttons() {
 }
 
 function add_buttons_batch() {
-    names_text = prompt("Please enter names, saperated by ','", names_text);
+    names_text = prompt("Please enter names, saperated by ','", names_text).toLowerCase();
     refresh_buttons();
 }
 
