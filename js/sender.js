@@ -572,8 +572,10 @@ channel.bind('pusher:subscription_succeeded', function () {
     console.log(channel);
 });
 
-channel.bind('client-request-content', function () {
+channel.bind('client-request-content', function (msg) {
+    console.log(msg);
     channel.trigger('client-text-edit', {
+        receiver_id: msg.receiver_id,
         file: document.getElementById('filename').innerHTML,
         connect: document.getElementById("connect").innerHTML,
         editor: editor.getValue(),

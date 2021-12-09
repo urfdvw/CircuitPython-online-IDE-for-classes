@@ -54,6 +54,30 @@ new ResizeObserver(function () {
 }).observe(out_frame)
 
 /**
+ * id
+ */
+
+// a unique random key generator
+function getUniqueId() {
+    return 'private-' + Math.random().toString(36).substr(2, 9);
+}
+
+// function to get a query param's value
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+var receiver_id = getUrlParameter('id');
+// var id = 'private-abc123';
+if (!receiver_id) {
+    location.search = location.search
+        ? '&id=' + getUniqueId() : 'id=' + getUniqueId();
+}
+
+/**
  * Pusher related
  */
 
@@ -92,6 +116,9 @@ function add_channel(name) {
         channel_list[name] = channel;
 
         channel.bind('client-text-edit', function (content) {
+            if (receiver_id != content.receiver_id){
+                return;
+            }
             clearTimeout(lostconnection_timer);
             if (content.file) {
                 document.getElementById("filename").innerHTML = content.file.split(': ').join('');
@@ -137,7 +164,9 @@ function alear_info(text) {
 var lostconnection_timer;
 function onetime_receiving() {
     try {
-        channel_list[current_name].trigger('client-request-content', {});
+        channel_list[current_name].trigger('client-request-content', {
+            receiver_id: receiver_id,
+        });
         lostconnection_timer = setTimeout(function () {
             alear_info(current_name + " lost connection.")
         }, 2000); // if time exceed, unsubcribe the channel
