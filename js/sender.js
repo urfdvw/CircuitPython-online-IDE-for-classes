@@ -490,6 +490,10 @@ if (!id) {
         ? '&id=' + getUniqueId() : 'id=' + getUniqueId();
 }
 
+var id_name = id.slice(8, 9).toUpperCase() + id.slice(9,id.length)
+
+alert('Hello ' + id_name + '!\nIf you are not ' + id_name + ', please close this browser tab and log in again.')
+
 var pusher = new Pusher('f76a627d8d2490ada3c9', {
     cluster: 'us2'
 });
