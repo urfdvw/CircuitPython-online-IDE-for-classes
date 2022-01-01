@@ -34,13 +34,10 @@
     </link>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css">
     </link>
-    <link rel="stylesheet" href="https://codemirror.net/addon/hint/show-hint.css">
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js"></script>
     <script type="text/javascript" src="js/python.js"></script>
     <script type="text/javascript" src="https://codemirror.net/addon/comment/comment.js"></script>
-    <script type="text/javascript" src="https://codemirror.net/addon/hint/show-hint.js"></script>
-    <script src="https://codemirror.net/addon/hint/anyword-hint.js" id=anyword></script>
 
 </head>
 
@@ -119,9 +116,11 @@ This will trigger a `soft rebot` on the microcontroller, and run the saved scrip
                 Feedback
             </button>
         </span>
-        <span title="Click on this button will change the keyboard shortcut for sending command(s).">
-            <button id="send_setting" onclick="change_send_key();" style="float: right;">
-                [Enter] to send
+        <span title="If you are using CircuitPython After the class, please use this IDE instead.
+            It has more features and easier to use.">
+            <button
+                onclick="window.open('https://urfdvw.github.io/CircuitPython-online-IDE/')">
+                Full IDE
             </button>
         </span>
     </div>

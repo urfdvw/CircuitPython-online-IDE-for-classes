@@ -82,9 +82,6 @@ async function readLoop() {
         const { value, done } = await reader.read();
         if (value) {
             serial_value_text += value;
-            get_dir_returns();
-            // removed the carriage return, for some reason CircuitPython does not need it
-            //log.innerHTML += value + '\n';
         }
         if (done) {
             console.log('[readLoop] DONE', done);
@@ -258,23 +255,10 @@ function savelog() {
  * Code mirrow Related ***************************************************************************
  */
 
- var editor_info = '""" <<< Editor help >>>\n\n' +
- 'This IDE supports Chrome or Chromium-based browsers such as MS Edge.\n\n' +
- 'Please connect the board before any operation.\n\n' +
- '--- Editor Keyboard Shortcuts ---\n\n' +
- 'On Macs, [Cmd] can be used instead of [Ctrl].\n\n' +
- '[Ctrl-S]: Save the file\n    This will trigger reset and run the saved Script\n' +
- '[Ctrl-Space]: auto completion\n\n' +
- 'REPL Mode Specific:\n' +
- '[Shift-Enter] to run the current line of code\n    or to run the selected lines of code\n' +
- '[Ctrl-Enter] to run the current Cell\n' +
- '    Cells are multiple lines of codes starts with `#%%`\n' +
- '"""\nimport board\n';
-
-CodeMirror.commands.autocomplete = function (cm) {
-    // cm.showHint({ hint: CodeMirror.hint.any });
-    cm.showHint({ hint: CodeMirror.hint.anyword });
-}
+ var editor_info = '""" <<< Editor Help >>>\n\n' +
+ 'This IDE supports Chrome or Chromium-based browsers such as MS Edge.\n' +
+ 'Please connect the board before any operation.\n' +
+ '"""';
 
 var editor = CodeMirror(document.querySelector('#my_div'), {
     lineNumbers: true,
@@ -285,8 +269,6 @@ var editor = CodeMirror(document.querySelector('#my_div'), {
     theme: 'monokai',
     extraKeys: {
         Tab: betterTab,
-        "Ctrl-Space": "autocomplete",
-        "Cmd-Space": "autocomplete"
     },
     lineWrapping: true,
 });
@@ -304,8 +286,6 @@ var serial_info = '<<< Serial console help >>>\n\n' +
 '[Enter] send command(s)\n' +
 '[Shift-Enter] newline\n' +
 '[Up] and [Down] recall history commands\n\n' +
-'The shortcut of send and newline can be\n' +
-'swapped by the button at the bottom.\n\n' +
 '*******************************************\n'
 serial_value_text = serial_info;
 
@@ -361,27 +341,8 @@ command.addKeyMap({
     "Up": hist_up,
     "Down": hist_down,
     "Shift-Ctrl-C": sendCTRLC,
-    "Ctrl-D": sendCTRLD,
+    "Shift-Ctrl-D": sendCTRLD,
 });
-
-var enter_to_send = true;
-function change_send_key() {
-    if (enter_to_send) {
-        command.addKeyMap({
-            "Enter": "newlineAndIndent",
-            "Shift-Enter": run_command,
-        });
-        document.getElementById('send_setting').innerHTML = "[Shift-Enter] to send";
-        enter_to_send = false;
-    } else {
-        command.addKeyMap({
-            "Shift-Enter": "newlineAndIndent",
-            "Enter": run_command,
-        });
-        document.getElementById('send_setting').innerHTML = "[Enter] to send";
-        enter_to_send = true;
-    }
-}
 
 function betterTab(cm) {
     // https://github.com/codemirror/CodeMirror/issues/988#issuecomment-14921785
@@ -501,34 +462,6 @@ function hist_down(cm) {
     } else {
         cm.setCursor({ "line": cm.getCursor()["line"] + 1, "ch": cm.getCursor()["ch"] })
     }
-}
-
-/**
- * Auto completion (Not yet used) ************************
- */
-
-var auto_com_words = null;
-function get_dir_returns() {
-    // if last command is dir()
-    auto_com_words = null;
-    var last = serial.getValue().split('\n>>> ');
-    last = last[last.length - 2]
-    if (last === undefined) {
-        return
-    }
-    if (last.startsWith('dir(')) {
-        // get dir result
-        last = last.split('[')
-        auto_com_words = last[last.length - 1].split(']')[0].split("'").join('').split(',')
-        auto_com_words = auto_com_words.map(function (item) {
-            return item.trim()
-        })
-        auto_com_words = auto_com_words.filter(function (item) {
-            return item.slice(0, 2) != '__'
-        })
-    }
-    // console.log(auto_com_words)
-    // return auto_com_words
 }
 
 /**
