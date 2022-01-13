@@ -50,10 +50,7 @@ channel.bind('client-request-content', function (msg) {
         file: document.getElementById('filename').innerHTML,
         connect: document.getElementById("connect").innerHTML,
         editor: editor.getValue(),
-        cursor: {
-            line: editor.getCursorPosition().row,
-            ch: editor.getCursorPosition().column,
-        },
+        cursor: editor.getCursorPosition(),
         serial: serial.getValue().slice(end = -(9000 - editor.getValue().length)),
         // 10000 byte is the limit of a message
         command: command.getValue(),

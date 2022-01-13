@@ -2,57 +2,109 @@
 <html>
 
 <head>
+    <style>
+        body {
+            color: rgb(248, 248, 242);
+            background-color: rgb(39, 40, 34);
+        }
 
-    <head>
-        <style>
-            body {
-                color: rgb(248, 248, 242);
-                background-color: rgb(39, 40, 34);
-            }
+        .row {
+            display: flex;
+        }
 
-            .head {
-                height: 70px;
-            }
+        .column {
+            flex: 50%;
+        }
 
-            .content {
-                /* (100% - head - tail)/2  -20 */
-                height: calc((100vh - 70px - 20px - 20px) / 2);
-                overflow-y: scroll;
-                border: 1px solid grey;
-            }
+        .head {
+            height: 50px;
+        }
 
-            .tail {
-                height: 20px;
-            }
-        </style>
-    </head>
+        .toolbar {
+            height: 20px;
+        }
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.css">
-    </link>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/theme/monokai.min.css">
-    </link>
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.52.2/codemirror.min.js"></script>
-    <script type="text/javascript" src="js/python.js"></script>
-    <script type="text/javascript" src="https://codemirror.net/addon/selection/active-line.js"></script>
+        .content {
+            height: calc(100vh - 20px - 50px - 40px - 20px);
+            border: 1px solid grey;
+        }
 
+        #editor {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 100%;
+        }
+
+        #serial {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 100%;
+        }
+
+        #command {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 100%;
+        }
+
+        .tail {
+            height: 20px;
+        }
+    </style>
 </head>
 
 <body>
     <div class="head">
         student list:
     </div>
-    
-    <div class="content">
-        <div>[File: <text id="filename"> </text>] [Serial: <text id="connect"> </text>]</div>
-        <div id="my-div">
+
+
+    <div class="row">
+        <div class="column toolbar">
+            <button id="inputfile" style="display: none;"> Open </button>
+            <div>Editor: [File: <text id="filename"> </text>] [Serial: <text id="connect"> </text>]</div>
+        </div>
+        <div class="column toolbar">
+            Serial
+            [
+            <span title="Show/hide the plot.
+How to plot? See the `IDE Help` on the bottom left corner!">
+                <button onclick="plot_main()">Plot</button>
+            </span>
+            <span title="If this box is checked, the first dimension of the data is considered as the x-axis.
+Otherwise, all dimensions of the data are considered as paralleled y-axes,
+and the x-axis on the figure is going to be the index.">
+                x-axis<input type="checkbox" id="x-axis" onchange="plot_refresh()">
+            </span>
+            ]
         </div>
     </div>
-
-    <div class="content">
-        <div id='out_frame'>
-            <div id="serial_R"></div>
-            <div id="serial_T"></div>
+    <div class="row">
+        <div class="column content">
+            <div id="editor"># Student's code</div>
+        </div>
+        <div class="column content" style='overflow-y: scroll'>
+            <div id='out_frame'>
+                <div id="serial_R">
+                    <div id="serial">Student's serial communication</div>
+                </div>
+                <div id="plot" style="display:none"></div>
+                <div id="serial_T" style="border: 1px solid grey; position:relative">
+                    <div id="command"># Student's command</div>
+                    <span title="Send command(s) to the microcontroller.">
+                        <button onclick="run_command(command);"
+                            style="position: absolute; bottom: 0; right: 0; z-index: 10">
+                            Send
+                        </button>
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -61,14 +113,23 @@
         <input type="button" value="Refresh students" onclick="refresh_buttons();">
 
         <div style="float: right;">
-            <input type="checkbox" onchange="change_auto_refreshing(this);">
+            <input type="checkbox" id='loop' onchange="loop_receiving();">
             Auto refreshing
             </input>
             <input type="button" value="Refresh" onclick="onetime_receiving();">
         </div>
     </div>
+    <script src="https://pagecdn.io/lib/ace/1.4.13/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://pagecdn.io/lib/ace/1.4.13/ext-language_tools.js"></script>
+    <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script>
+    <script type="text/javascript" src="js/code_basic.js">
+    </script>
+    <script type="text/javascript" src="js/code.js">
+    </script>
     <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
     <script type="text/javascript" src="js/receiver.js">
+    </script>
+
     </script>
 </body>
 

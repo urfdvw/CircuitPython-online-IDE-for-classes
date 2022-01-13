@@ -1,57 +1,13 @@
 /**
- * info ****************************************************************
+ * Extra Ace setup
  */
 
-document.title = 'Class Assitant'
-
-/**
-* Code mirrow Related ***************************************************************************
-*/
-
-var editor_info = 'Students code will show up here'
-
-
-var editor = CodeMirror(document.querySelector('#my-div'), {
-    lineNumbers: true,
-    value: editor_info,
-    mode: 'python',
-    theme: 'monokai',
-    styleActiveLine: true,
-    readOnly: true,
-    lineWrapping: true,
+editor.setOptions({
+    // https://stackoverflow.com/a/13579233/7037749
+    maxLines: Infinity
 });
-editor.setSize(width = '100%', height = '100%')
-
-var serial_info = "Students console out will show up here"
-
-var serial = CodeMirror(document.querySelector('#serial_R'), {
-    lineNumbers: false,
-    value: serial_info,
-    theme: 'monokai',
-    mode: 'text',
-    readOnly: true,
-    lineWrapping: true,
-});
-serial.setSize(width = '100%', height = '100%')
-
-var command_info = "Students command will show up here"
-var command = CodeMirror(document.querySelector('#serial_T'), {
-    lineNumbers: true,
-    value: command_info,
-    mode: 'python',
-    readOnly: true,
-    lineWrapping: true,
-});
-command.setSize(width = '100%', height = '100%')
-
-/**
- * UI
- */
-
-// auto scroll 
-new ResizeObserver(function () {
-    out_frame.parentNode.scrollTop = out_frame.parentNode.scrollHeight;
-}).observe(out_frame)
+editor.setReadOnly(true);
+command.setReadOnly(true);
 
 /**
  * id
@@ -89,7 +45,7 @@ var pusher = new Pusher('f76a627d8d2490ada3c9', {
 
 var channel_list = {};
 
-var marker;
+var serial_value_text;
 function add_channel(name) {
     var id = 'private-' + name;
     var channel = pusher.subscribe(id);
@@ -116,7 +72,7 @@ function add_channel(name) {
         channel_list[name] = channel;
 
         channel.bind('client-text-edit', function (content) {
-            if (receiver_id != content.receiver_id){
+            if (receiver_id != content.receiver_id) {
                 return;
             }
             clearTimeout(lostconnection_timer);
@@ -130,35 +86,20 @@ function add_channel(name) {
             } else {
                 document.getElementById("connect").innerHTML = content.connect;
             }
-            editor.setValue(content.editor);
-            editor.setCursor(content.cursor);
-            serial.setValue(content.serial);
-            command.setValue(content.command);
-            // https://dev.to/yoheiseki/how-to-display-the-position-of-the-cursor-caret-of-another-client-with-codemirror-6p8
-            // Generate DOM node (marker / design you want to display)
-            const cursorCoords = editor.cursorCoords(content['cursor']);
-            const cursorElement = document.createElement('span');
-            cursorElement.style.borderLeftStyle = 'solid';
-            cursorElement.style.borderLeftWidth = '2px';
-            cursorElement.style.borderLeftColor = '#ff0000';
-            cursorElement.style.height = `${(cursorCoords.bottom - cursorCoords.top)}px`;
-            cursorElement.style.padding = 0;
-            cursorElement.style.zIndex = 0;
-            // Set the generated DOM node at the position of the cursor sent from another client
-            // setBookmark first argument: The position of the cursor sent from another client
-            // Second argument widget: Generated DOM node
-            try {
-                marker.clear();
-            } catch { }
-            marker = editor.setBookmark(content.cursor, { widget: cursorElement });
+            editor.setValue(content.editor, -1);
+            editor.gotoLine(content.cursor.row + 1, content.cursor.column)
+            serial.setValue(content.serial, -1);
+            serial_value_text = content.serial;
+            command.setValue(content.command, -1);
         });
     });
 }
 
 function alear_info(text) {
-    editor.setValue(text)
-    command.setValue(text)
-    serial.setValue(text)
+    editor.setValue(text, -1)
+    command.setValue(text, -1)
+    serial.setValue(text, -1)
+    serial_value_text = ''
 }
 
 var lostconnection_timer;
@@ -178,18 +119,13 @@ function onetime_receiving() {
 var receiving_timer;
 
 function loop_receiving() {
-    function loop() {
-        var rand = Math.round(Math.random() * 100) + 900;
-        receiving_timer = setTimeout(function () {
+    var rand = Math.round(Math.random() * 100) + 900;
+    receiving_timer = setTimeout(function () {
+        if (document.getElementById('loop').checked) {
             onetime_receiving(current_name);
-            loop();
-        }, rand);
-    }
-    loop();
-}
-
-function stop_receiving() {
-    clearTimeout(receiving_timer);
+            loop_receiving();
+        }
+    }, rand);
 }
 
 /**
@@ -235,12 +171,4 @@ function refresh_buttons() {
 function add_buttons_batch() {
     names_text = prompt("Please enter names, saperated by ','", names_text).toLowerCase();
     refresh_buttons();
-}
-
-function change_auto_refreshing(box) {
-    if (box.checked) {
-        loop_receiving();
-    } else {
-        stop_receiving();
-    }
 }
