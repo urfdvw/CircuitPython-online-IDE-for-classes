@@ -1,9 +1,9 @@
 # CircuitPython online IDE for classes
 
-This project provides (almost) the same online ide as the [Cpy online IDE](https://github.com/urfdvw/CircuitPython-online-IDE).
+This project provides (almost) the same online IDE as the [Cpy online IDE](https://github.com/urfdvw/CircuitPython-online-IDE).
 However, in this project, teaching functions are provided:
-- students sign in the IDE by a unique 'nick name'
-- Instructors can monitor the students' editor code and console outputs according to their 'nick names'
+- students sign in the IDE by a unique 'nicknames'
+- Instructors can monitor the students' editor code and console outputs according to their 'nicknames'
 - Instructors can monitor multiple students
 
 With these additional functions, instructors can provide timely feedback to the students.
@@ -11,9 +11,10 @@ With these additional functions, instructors can provide timely feedback to the 
 # Techniques used
 - Node.js on the server-side
 - Vanilla JavaScript on the client-side
-    - Code Mirror 5
+    - Ace Editor
     - Chrome file API
     - Chrome Serial API
+    - Plotly for plot
 - Pusher for real-time communication
 - Goole app engine for hosting the service
 
@@ -21,12 +22,12 @@ With these additional functions, instructors can provide timely feedback to the 
 
 ## `index.html` is the sign-in page for students.
 
-Students can sign in and use the IDE.
+Students can sign in by nicknames or a pre-given link containing their nicknames.
 
 ## `receiver.html` is the instructor's monitor page.
 
 Instructors should First `Add students` by the left bottom corner,
-and check students' code by click on their name on the top.
+and check students' code by clicking on their name on the top.
 If `Auto refreshing` on the right bottom corner is selected,
 the code will be updated in real-time.
 If not selected, 

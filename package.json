@@ -1,7 +1,7 @@
 {
-  "name": "collaborative-text-editor",
+  "name": "cpy-ide-class",
   "version": "1.0.0",
-  "description": "An awesome collab-edit",
+  "description": "CircuitPython Online IDE for remote class",
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.19.1",
@@ -12,6 +12,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "Ankeet Maini",
-  "license": "MIT"
+  "author": "Hechuan Wang",
+  "license": "GPL3.0"
 }
