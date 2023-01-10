@@ -1,3 +1,11 @@
+Note: development of this project is halted.
+Please check [Cpy online IDE](https://github.com/urfdvw/CircuitPython-online-IDE) instead.
+That project offeres a better IDE experience without the remote monitor function.
+If you come from [the paper](https://peer.asee.org/40849),
+you will be interested in [that project](https://github.com/urfdvw/CircuitPython-online-IDE) as well.
+If you still want to know how the code monitor work,
+Please check [Pusher.com](https://pusher.com/).
+
 # CircuitPython online IDE for classes
 
 This project provides (almost) the same online IDE as the [Cpy online IDE](https://github.com/urfdvw/CircuitPython-online-IDE).
